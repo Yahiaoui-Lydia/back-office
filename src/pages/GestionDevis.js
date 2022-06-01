@@ -82,7 +82,7 @@ function GestionDevis() {
           name: "Action",
           cell: (row) => <div> 
               <FaExpandArrowsAlt style={{color:'green',fontSize:'22px',}} onClick={()=>handleButtonShowMore(row)}/>
-              <FaRegCheckSquare style={{color:'blue',fontSize:'23px'}} onClick={()=>handleButtonvalidate(row)}/>
+              <FaRegCheckSquare style={{color:'blue',fontSize:'23px'}} onClick={()=>valider(row)}/>
              
               <FaRegWindowClose style={{color:'red',fontSize:'22px'}} onClick={()=>handleButtonDelete(row)}/>
     
@@ -120,7 +120,7 @@ function GestionDevis() {
                   
                       await axios.get(process.env.REACT_APP_API_Product+e.idProduit , { headers: {'Authorization':  csrfToken},withCredentials: true    })
                       .then((response)=>{
-                      console.log(response.data)
+                  
                         
                           response.data.map(async (p)=>{
                          
@@ -223,14 +223,13 @@ function GestionDevis() {
    setAlertDelete(true) 
     
     };
-    const handleButtonvalidate= (row) => {
-        const tab=[]
-        tab.push(row)
-       setSelectedRows(tab)
-       setAlertValider(true)
-      
-        
-        };
+    const valider= async(row)=>{
+      var csrfToken = localStorage.getItem('csrfToken');
+      await axios.post(process.env.REACT_APP_API_ValiderDevis+row.id, { headers: {'Authorization':  csrfToken},withCredentials: true    })
+      .then((response)=>{
+        window.location.href='/devis'
+      })
+    }
         const getdevis = useCallback(async () => {
          
             var csrfToken = localStorage.getItem('csrfToken');

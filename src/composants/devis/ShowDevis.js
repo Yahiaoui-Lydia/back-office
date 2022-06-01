@@ -1,4 +1,5 @@
 import React, {useRef } from 'react'
+import axios from 'axios'
  import {Col, Modal, Row}from "react-bootstrap"
  import ReactToPrint from "react-to-print";
 import {BsShieldLockFill} from 'react-icons/bs'
@@ -105,7 +106,13 @@ import {BsShieldLockFill} from 'react-icons/bs'
   );
 });
 function ShowDevis(props){
-  
+  const valider= async()=>{
+    var csrfToken = localStorage.getItem('csrfToken');
+    await axios.post(process.env.REACT_APP_API_ValiderDevis+props.devis, { headers: {'Authorization':  csrfToken},withCredentials: true    })
+    .then((response)=>{
+      window.location.href='/devis'
+    })
+  }
   const componentRef = useRef();
    return (
        
@@ -128,9 +135,9 @@ function ShowDevis(props){
            ></Print>
         <Row style={{'borderTop':'solid'}}>
           
-        <Col> <ReactToPrint trigger={() => <button>Imprimer</button>} content={() => componentRef.current} /></Col>
-        <Col>  <button>valider</button></Col>
-        <Col>  <button onClick={()=>props.onHide()}>fermer</button></Col>
+        <Col> <ReactToPrint trigger={() => <button>PDF</button>} content={() => componentRef.current} /></Col>
+        <Col>  <button onClick={()=>valider()}>Valider</button></Col>
+        <Col>  <button onClick={()=>props.onHide()}>Fermer</button></Col>
       </Row>
    </Modal.Body>
     </Modal>
