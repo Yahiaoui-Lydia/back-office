@@ -102,70 +102,115 @@ function GestionDevis() {
       await axios.get(process.env.REACT_APP_API_GetClient+row.idUser, { headers: {'Authorization':  csrfToken},withCredentials: true})
             .then( (response)=>{
           
-                  response.data.map((user)=>{
+                  response.data.map(async(user)=>{
                
                     var tab=[]
                     if(user.role==='B2B'){
-                      var t ={"nom":user.nom_entreprise,"id":user.id, 'siret':user.SIRET,'role':user.role}
+                     let t ={"nom":user.nom_entreprise,"id":user.id, 'siret':user.SIRET,'role':user.role}
                       
                       tab.push(t)
                     
                       setclient(tab)
+                      var ta =[]
+                      var pt=0
+                  await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
+                .then((response)=>{
+                  response.data.map(async(e)=>{
+                    setelements([])
+                  
+                      await axios.get(process.env.REACT_APP_API_Product+e.idProduit , { headers: {'Authorization':  csrfToken},withCredentials: true    })
+                      .then((response)=>{
+                      console.log(response.data)
+                        
+                          response.data.map(async (p)=>{
+                         
+             
+                             const index = ta.findIndex(object => object.nom===p.nom );
+                             if (index === -1) {
+                               ta.push({"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
+                               setelements(ta)
+                               pt=pt+(e.quantity*p.prixGros)   
+                               
+                               setTotal(pt)  
+                             
+                             
+                             }else{
+                               
+                               ta.splice(index, 1,{"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
+                               setelements(ta)
+                               pt=pt+(e.quantity*p.prixGros)   
+                               
+                               setTotal(pt)
+                               
+                             }
+                           
+                        
+                          })
+          
+                      })
+                  })
+                }
+              
+                )
+             
+          
                    
                       
                     }else{
-                       t ={"nom":user.nom,"prenom":user.email,"id":user.id,'role':user.role}
+                       let t ={"nom":user.nom,"prenom":user.email,"id":user.id,'role':user.role}
                       tab.push(t)
                       setclient(tab)
+                      var ta =[]
+                      var pt=0
+                  await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
+                .then((response)=>{
+                  response.data.map(async(e)=>{
+                    setelements([])
+                  
+                      await axios.get(process.env.REACT_APP_API_Product+e.idProduit , { headers: {'Authorization':  csrfToken},withCredentials: true    })
+                      .then((response)=>{
+                      
+                        
+                          response.data.map(async (p)=>{
+                         
+             
+                             const index = ta.findIndex(object => object.nom===p.nom );
+                             if (index === -1) {
+                               ta.push({"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixDetail})
+                               setelements(ta)
+                               pt=pt+(e.quantity*p.prixDetail)   
+                               
+                               setTotal(pt)  
+                             
+                             
+                             }else{
+                               
+                               ta.splice(index, 1,{"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixDetail})
+                               setelements(ta)
+                               pt=pt+(e.quantity*p.prixDetail)   
+                               
+                               setTotal(pt)
+                               
+                             }
+                           
+                        
+                          })
+          
+                      })
+                  })
+                }
+              
+                )
+             
+          
+                      
                       
                     }
                   })
                   
                 }
             )
-            var ta =[]
-            var pt=0
-        await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
-      .then((response)=>{
-        response.data.map(async(e)=>{
-          setelements([])
-        
-            await axios.get(process.env.REACT_APP_API_Product+e.idProduit , { headers: {'Authorization':  csrfToken},withCredentials: true    })
-            .then((response)=>{
-            
-              
-                response.data.map(async (p)=>{
-               
-   
-                   const index = ta.findIndex(object => object.nom===p.nom );
-                   if (index === -1) {
-                     ta.push({"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
-                     setelements(ta)
-                     pt=pt+(e.quantity*p.prixGros)   
-                     
-                     setTotal(pt)  
-                   
-                   
-                   }else{
-                     
-                     ta.splice(index, 1,{"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
-                     setelements(ta)
-                     pt=pt+(e.quantity*p.prixGros)   
-                     
-                     setTotal(pt)
-                     
-                   }
-                 
-              
-                })
-
-            })
-        })
-      }
-    
-      )
-   
-
+     
   
       setAlertDetail(true)
       

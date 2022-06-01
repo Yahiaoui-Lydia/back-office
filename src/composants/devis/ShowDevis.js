@@ -5,10 +5,9 @@ import {BsShieldLockFill} from 'react-icons/bs'
  export const Print = React.forwardRef((props, ref) => {     
   return (
     <div ref={ref}  style={{'margin':'15px'}}>
-      <div style={{fontSize:'30px',textAlign:'center',borderBottom:'solid'}}>DEVIS NUMÉRO {props.devis}</div>
-       <div>
-         
-       <Col style={{'marginTop':'7px'}}> 
+      <div style={{'borderBottom':'solid','paddingBottom':'10px'}}>
+        <Row>
+      <Col style={{width:'30%'}}> 
        <Row >
        <BsShieldLockFill style={{fontSize:'50px',padding:'0px',margin:'0px',width:'50px',}}/>
        <Col style={{'fontSize':'10px',marginTop:'5px'}}>
@@ -20,25 +19,52 @@ import {BsShieldLockFill} from 'react-icons/bs'
        
        </Row>
        </Col>
-     
-       </div>
-       <div>
+      <Col style={{width:'70%',textAlign:'left',fontSize:'20px'}}>DEVIS NUMÉRO {props.devis}</Col>  
+      </Row>
+        </div>
+      <br></br>
+   
+       <Row>
+         <Col style={{'fontSize':'12px'}}>
+        <h5>Devis établi par</h5>
          PROVISION SECURITY SYSTEMS<br/>
-         Adresse:sidi ahmed..<br/>
+         Adresse:lot n°47 
+         ferme oultache, 
+         Sidi Ahmed<br/>
          Tel:032546978<br/>
-       </div>
-     
-{props.client.map((c)=>{
-      return(
-        <div key={c.nom} style={{textAlign:'right'}}>
-         Client: {c.nom}<br/>
-         Numéro du client:{c.id}
-          </div>
-      )
-    })}
+         </Col>
+         <Col  style={{width:'50%'}}>
+         {props.client.map((c)=>{
+  if(c.role==='B2B'){
+
+    return(
+      <div key={c.nom} style={{'fontSize':'12px'}}>
     
-    <div style={{'textAlign':'center'}}> Devis valide jusqu'au {props.date}</div>
- 
+  <h5>Devis adressé à</h5>
+        Numéro du client:{c.id}<br/>
+       Entreprise: {c.nom}<br/>
+       SIRET: {c.siret}</div>
+      
+        
+    )
+  }else{
+    return(
+      <div key={c.nom} style={{'fontSize':'12px'}}>
+          <h5>Devis adressé à</h5>
+       Client: {c.nom}<br/>
+       Numéro du client:{c.id}
+        </div>
+    )
+  }
+    })}
+         </Col>
+        </Row>
+       
+        <br></br>
+
+    
+    <div style={{'textAlign':'center',fontSize:'25px','color':'red'}}> Devis valable jusqu'au {props.date}</div>
+ <br></br>
 
   <table className='tab'>
   <thead>
@@ -71,9 +97,11 @@ import {BsShieldLockFill} from 'react-icons/bs'
 }
   </tbody>
 </table>
-
-<div> Prix total à payer {props.total} DA</div>
+<br></br>
+<div  style={{'textAlign':'center',fontSize:'25px','border':'solid'}}> Prix total à payer {props.total} DA</div><br></br>
+<div style={{'textAlign':'center'}}>Nous restons à votre disposition pour toute information complémentaire.Cordialement</div>
     </div>
+
   );
 });
 function ShowDevis(props){
@@ -81,14 +109,14 @@ function ShowDevis(props){
   const componentRef = useRef();
    return (
        
-       <Modal
+       <Modal 
       {...props}
      
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
+     
+
     >
     
-      <Modal.Body>
+      <Modal.Body >
       
        <Print
            el={props.el}
@@ -98,7 +126,7 @@ function ShowDevis(props){
            devis={props.devis}
            total={props.totall}
            ></Print>
-        <Row>
+        <Row style={{'borderTop':'solid'}}>
           
         <Col> <ReactToPrint trigger={() => <button>Imprimer</button>} content={() => componentRef.current} /></Col>
         <Col>  <button>valider</button></Col>
