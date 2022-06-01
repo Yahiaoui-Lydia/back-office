@@ -42,6 +42,8 @@ function GestionDevis() {
     const [AlertValider, setAlertValider] = React.useState(false);
     const[elements,setelements]=useState([])
     const[client,setclient]=useState([])
+    const [devis,setdevis]=useState('')
+    const[total,setTotal]=useState(0)
     const handleRowSelected = React.useCallback(state => {
   
           setSelectedRows(state.selectedRows);
@@ -68,7 +70,11 @@ function GestionDevis() {
       
       {
         name: "Valide jusqu'au",
-        selector: (row) => row.date,
+        selector: (row) =>{
+          var thisDate = new Date(row.date);
+          var date = (thisDate.getUTCDate())+ "/" + (thisDate.getMonth() + 1)+ "/" + (thisDate.getUTCFullYear()) ;
+        return date
+        } ,
              
        
         },
@@ -88,15 +94,19 @@ function GestionDevis() {
       //   const tab=[]
       //   tab.push(row)
       //  setSelectedRows(tab)
-      
-       setdate(row.date)
+      setdevis(row.id)
+      var thisDate = new Date(row.date);
+      var date = (thisDate.getUTCDate())+ "/" + (thisDate.getMonth() + 1)+ "/" + (thisDate.getUTCFullYear()) ;
+       setdate(date)
       var csrfToken = localStorage.getItem('csrfToken');
       await axios.get(process.env.REACT_APP_API_GetClient+row.idUser, { headers: {'Authorization':  csrfToken},withCredentials: true})
             .then( (response)=>{
+          
                   response.data.map((user)=>{
+               
                     var tab=[]
                     if(user.role==='B2B'){
-                      var t ={"nom":user.nom_entreprise,"role":'B2B'}
+                      var t ={"nom":user.nom_entreprise,"id":user.id, 'siret':user.SIRET,'role':user.role}
                       
                       tab.push(t)
                     
@@ -104,7 +114,7 @@ function GestionDevis() {
                    
                       
                     }else{
-                      var t ={"nom":user.nom,"prenom":user.email,'role':'B2B'}
+                       t ={"nom":user.nom,"prenom":user.email,"id":user.id,'role':user.role}
                       tab.push(t)
                       setclient(tab)
                       
@@ -113,27 +123,37 @@ function GestionDevis() {
                   
                 }
             )
+            var ta =[]
+            var pt=0
         await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
       .then((response)=>{
         response.data.map(async(e)=>{
           setelements([])
-          console.log(elements)
+        
             await axios.get(process.env.REACT_APP_API_Product+e.idProduit , { headers: {'Authorization':  csrfToken},withCredentials: true    })
             .then((response)=>{
             
               
                 response.data.map(async (p)=>{
                
-             var tab =elements
-             
-                
-                   
-                   console.log(tab)
-                   const index = elements.findIndex(object => object.nom===p.nom);
+   
+                   const index = ta.findIndex(object => object.nom===p.nom );
                    if (index === -1) {
-                     tab.push({"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
-                     setelements(tab)
+                     ta.push({"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
+                     setelements(ta)
+                     pt=pt+(e.quantity*p.prixGros)   
+                     
+                     setTotal(pt)  
                    
+                   
+                   }else{
+                     
+                     ta.splice(index, 1,{"nom":p.nom,"ref":p.ref,'quantity':e.quantity,"prix":p.prixGros})
+                     setelements(ta)
+                     pt=pt+(e.quantity*p.prixGros)   
+                     
+                     setTotal(pt)
+                     
                    }
                  
               
@@ -142,8 +162,11 @@ function GestionDevis() {
             })
         })
       }
-       
+    
       )
+   
+
+  
       setAlertDetail(true)
       
         
@@ -208,11 +231,12 @@ function GestionDevis() {
            
             show={AlertDetail}
             onHide={() => setAlertDetail(false)}
-            selectedrow={selectedRows}
+            devis={devis}
             el={elements}
             date={date }
             client={client}
-            
+            totall={total}
+            tot='did'
           />
           
             <DataTable

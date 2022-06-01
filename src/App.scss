@@ -6,6 +6,22 @@ $color2:rgb(205, 255, 235);
 $color3:rgb(15, 10, 60);
 
 
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+thead {
+	background-color: #333;
+	color: white;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 2%;
+}
+
 //navbar
 .navbar{
     background-color:$color2;
