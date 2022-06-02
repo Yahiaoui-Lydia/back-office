@@ -7,7 +7,7 @@ import {
   MenuItem,
   SidebarHeader,
   SidebarFooter,
-  SidebarContent
+  SidebarContent,SubMenu
 } from "react-pro-sidebar";
 
 //import icons from react icons
@@ -36,7 +36,7 @@ const SideBarSuperAdmin = (props) => {
       <div id="header">
         {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
-          <SidebarHeader classeName='logo'>
+          <SidebarHeader className='logo'>
             <div className="logotext logo">
               {/* small and big change using menucollapse state */}
               <p>{menuCollapse ? "Logo" : "Big Logo"}</p>
@@ -62,10 +62,11 @@ const SideBarSuperAdmin = (props) => {
                Categories
                 <Link to="/categories" />
                 </MenuItem>
-              <MenuItem icon={<FaFileInvoiceDollar />}>
-                Devis
-                <Link to="/devis" />
-                </MenuItem>
+              
+                <SubMenu title="Devis" icon={<FaFileInvoiceDollar />}>
+                <MenuItem>Devis validés<Link to="/devisValide" /></MenuItem>
+                <MenuItem>Devis non validés<Link to="/devisNonValide" /></MenuItem>
+                </SubMenu>
               <MenuItem icon={<FaHandshake />}>
                 Demande B2B
                 <Link to="/b2b" />

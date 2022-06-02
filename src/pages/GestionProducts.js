@@ -24,17 +24,17 @@ import {BsPencilSquare} from 'react-icons/bs'
     </div>
   ));
   const paginationOptions = {
-  
+
       rowsPerPageText: 'Nombre de lignes par page',
-  
+
       rangeSeparatorText: 'de',
-  
+
       selectAllRowsItem: true,
-  
+
       selectAllRowsItemText: 'toutes',
-  
+
   };
-  
+
 function GestionProducts(){
     const [listProduit,setListProduit] =useState([]);
     const [pending, setPending] =useState(true);
@@ -45,15 +45,15 @@ function GestionProducts(){
     const [AlertUpdate, setAlertUpdate] = React.useState(false);
     const [showMore, setShowMore] = React.useState(false);
     const handleRowSelected = React.useCallback(state => {
-  
+
           setSelectedRows(state.selectedRows);
-  
+
       }, []);
-  
+
     const handleSearch = (event) => {setSearch(event.target.value);};
-  
+
     const contextActions =  <button key="delete" className='bi bi-trash3 text-white btn' onClick={()=>setAlertDelete(true)} style={{ backgroundColor: 'red' }} > Supprimer</button>  ;
-  
+
     const actions =
      <div style={{width:"100%", 'textAlign':'center'}}>
       <label htmlFor="search" className='bi bi-search'></label>
@@ -61,8 +61,8 @@ function GestionProducts(){
         <button className='bi bi-arrow-repeat btn-add' key="refrech"  onClick={()=> window.location.href='/produits'}   style={{'marginLeft':'0%' ,'backgroundColor':'transparent','border':'none'}} > </button>
         <button className='bi bi-patch-plus btn-add' key="add"  onClick={()=> setAlertAdd(true)}   style={{'marginLeft':'0%' ,'backgroundColor':'transparent','border':'none'}} > </button>
         </div>; 
-    
-    
+
+
   const columns = [
     {
       name: "Id",
@@ -103,8 +103,8 @@ function GestionProducts(){
     name: "Catégorie",
     selector: (row) => row.categorie,
     sortable: true
-  
-   
+
+
     },
     {
       name: "Action",
@@ -113,70 +113,70 @@ function GestionProducts(){
           <RiDeleteBin2Line style={{color:'red',fontSize:'22px'}} onClick={()=>handleButtonDelete(row)}/>
           <BsPencilSquare style={{color:'blue',fontSize:'20px'}} onClick={()=>handleButtonUpdate(row)}/>
           </div>,
-  
+
     },
-  
-    
+
+
     ];
-    
+
     const handleButtonDelete = (row) => {
       const tab=[]
       tab.push(row)
      setSelectedRows(tab)
      setAlertDelete(true) 
-      
+
       };
       const handleButtonUpdate= (row) => {
           const tab=[]
           tab.push(row)
          setSelectedRows(tab)
          setAlertUpdate(true)
-          
+
           };
           const handleButtonShowMore= (row) => {
             const tab=[]
             tab.push(row)
            setSelectedRows(tab)
            setShowMore(true)
-            
+
             };
-  
+
     useEffect( ()=>{
-  
+
         const getProducts  = async ()=>{
-       
+
                 await axios.get(process.env.REACT_APP_API_listProducts, { headers: {'Authorization':localStorage.getItem('csrfToken')},withCredentials: true    })
           .then((response) => {
             setListProduit( response.data.filter(
                 (item) => { return(item.ref.toLowerCase().includes(search.toLowerCase())||item.categorie.toLowerCase().includes(search.toLowerCase())||item.nom.toLowerCase().includes(search.toLowerCase())||item.prixGros===search||item.prixDetail===search||item.description.toLowerCase().includes(search.toLowerCase())) }    
                  )
             )
-          
+
             setPending(false);
-       
+
         })
         .catch((error) => {
-           
+
             if (error.response) {
               // La requete a été faite et le serveur a répondu avec un code d'état qui se situe en dehors de la plage de 2xx
                 if(error.response.status === 401){
                   localStorage.setItem('role','')
                   window.location.href='/login'
-                
+
                 }
             } else if (error.request) {
               // La requete a été faite mais aucune réponse n'a été reçue,erreur du coté serveur
-            
+
             }
           })
        }
        ;getProducts();}
       ,[search] )
-     
-  
+
+
     return (
       <div className="main">
-      
+
         {/* <div style={{'color':'red','textAlign':'center'}}>{erreur?erreur:null}</div> */}
         <AddProduct
          show={AlertAdd}
@@ -187,19 +187,19 @@ function GestionProducts(){
           onHide={() => setAlertDelete(false)}
           rows={selectedRows}
         ></DeleteProduct>
-        
+
         <UpdateProducts
          show={AlertUpdate}
          onHide={() => setAlertUpdate(false)}
          selectedrow={selectedRows}
          id={selectedRows.map((r)=>{return r.id})}
-      
+
         ></UpdateProducts>
         <VoirPlus 
          show={showMore}
          onHide={() => setShowMore(false)}
          selectedrow={selectedRows} ></VoirPlus>
-        
+
           <DataTable
                       columns={columns}
                       title=" "
@@ -219,11 +219,11 @@ function GestionProducts(){
                       actions={actions}
                       onSelectedRowsChange={handleRowSelected}
                       sortIcon={<BiSortAlt2/>}
-                   
-  
-          
+
+
+
           />
-      
+
       </div>
     );
 }

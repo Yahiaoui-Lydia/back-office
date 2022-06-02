@@ -89,7 +89,23 @@ thead {
   #header .logo {
     padding: 20px;
   }
+
+  .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
+    background-color:$color1;
+
   
+  }
+  .pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu > .pro-inner-item > .pro-arrow-wrapper .pro-arrow{
+    border-color:$color2;
+  }
+
+  .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item > div > ul {
+    padding: 0px!important;
+  }
+  .pro-sub-menu.collapsed{
+    background-color: red !important;
+    color: #333;
+  }
   @media only screen and (max-width: 720px) {
     html {
       overflow: hidden;

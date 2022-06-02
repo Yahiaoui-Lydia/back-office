@@ -13,6 +13,7 @@ import GestionCategories from '../pages/GestionCategories'
 import GestionB2B from '../pages/GestionB2B'
 import GestionDevis from  '../pages/GestionDevis'
 import GestionAdmins from '../pages/GestionAdmins';
+import ListDevisValides from '../pages/ListDevisValides';
 
 
 function verify() { 
@@ -43,7 +44,8 @@ function SuperAdminRoutes() {
              <Route path="/" element={<Home/>}/>
              <Route path="/produits" element={<GestionProducts/>}/>
              <Route path="/categories" element={<GestionCategories/>}/>
-             <Route path="/devis" element={<GestionDevis/>}/>
+             <Route path="/devisValide" element={<ListDevisValides/>}/>
+             <Route path="/devisNonValide" element={<GestionDevis/>}/>
              <Route path="/b2b" element={<GestionB2B />}/>
              <Route path="/admins" element={<GestionAdmins />}/>
         </Routes>
