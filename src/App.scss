@@ -102,31 +102,86 @@ thead {
   .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item > div > ul {
     padding: 0px!important;
   }
-  .pro-sub-menu.collapsed{
-    background-color: red !important;
-    color: #333;
+  .pro-sidebar.collapsed .pro-menu > ul > .pro-menu-item.pro-sub-menu > .pro-inner-list-item > .popper-inner {
+    background-color: $color1;
+
+    
   }
+
+
+
+
   @media only screen and (max-width: 720px) {
     html {
       overflow: hidden;
     }
   }
 //datatable
+//pagination bouton 
+.bvxQGL:disabled {
+  fill:$color3!important;
+  color:$color3!important;
+  background-color:$color1!important;
+}
+.bvxQGL {
+  fill:$color3!important;
+  color:$color3!important;
+  background-color:$color1!important;
+}
+//text pagination
+.jxflYm {
+  color:$color3!important;
+font-size: 16px;
+background-color:$color2!important;
+}
+//pagination nombre row
+.kJrhuj {
+  background-color:$color2!important;
+  color:$color3!important;
+}
 //header rows
 .rdt_TableHeadRow{
  color:$color3;
  font-size: 12.2px;
  font-weight: bold;
 }
-
+.cQLlaq {
+  background-color: white!important;
+}
 //header tab
 #search{
-width:50%;
+width:45%;
+border-top: none;
+border-left: none;
+border-right: none;
+border-bottom: solid;
+border-color:$color3;
 }
-.btn-add{
-
+#search::placeholder{
+  text-align: center;
+}
+#search:focus{
+  border-top: none!important;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid;
+ 
+  border-color:$color1;
+}
+//button header
+.btn-tab{
+background-color: transparent;
+border: none;
+color: $color3;
+font-size: 35px;
+margin-left: 30px;
 }
 
 .kWAsOx{
 flex: none !important;
+}
+//header search add....
+.gtQiQo > * {
+  text-align: center!important;
+  margin-left: 0px !important;
 }

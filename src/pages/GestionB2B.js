@@ -128,8 +128,8 @@ const columns = [
           if (error.response) {
             // La requete a été faite et le serveur a répondu avec un code d'état qui se situe en dehors de la plage de 2xx
               if(error.response.status === 401){
-                // localStorage.setItem('role','')
-                // window.location.href='/login'
+                localStorage.setItem('role','')
+                window.location.href='/login'
               
               }
           } else if (error.request) {
@@ -176,7 +176,8 @@ const columns = [
                     contextActions={contextActions}
                     actions={actions}
 			              onSelectedRowsChange={handleRowSelected}
-                 
+                    contextMessage={{ singular: 'demande', plural: 'demandes', message: 'sélectionnée(s)'} }
+                          noDataComponent="Aucun demande d'inscription n'est trouvée"
 
         
         />

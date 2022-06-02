@@ -5,6 +5,9 @@ import axios from 'axios';
 import DataTable from "react-data-table-component";
 import AddAdmin from '../composants/admins/AddAdmin';
 import DeleteAdmin from '../composants/admins/DeleteAdmin'
+import {OverlayTrigger,Tooltip} from 'react-bootstrap'
+
+
 
 
 const BootyCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
@@ -52,7 +55,8 @@ function GestionAdmins() {
 
   const contextActions =  <button key="delete" className='bi bi-trash3 text-white btn' onClick={()=>setAlert(true)} style={{ backgroundColor: 'red' }} > Supprimer</button>  ;
 
-  const actions = <div style={{'width':'100%'} }><label htmlFor="search" className='bi bi-search '></label><input id="search" type="text" onChange={handleSearch} className='search' placeholder='Rechercher par nom , prénom ,email ' /><button key="add"  onClick={()=> setAlertAdd(true)}  className='bi bi-person-plus' style={{'marginLeft':'0%' ,'backgroundColor':'transparent','border':'none'}} > Ajouter</button></div>; 
+  const actions = <div style={{'width':'100%'} }><label htmlFor="search" className='bi bi-search btn-tab '></label><input id="search" type="text" onChange={handleSearch} className='search' placeholder='Rechercher par nom , prénom ,email ' />
+    <OverlayTrigger placement="bottom" overlay={<Tooltip >Ajouter un nouvel administrateur</Tooltip>}  ><button key="add"  onClick={()=> setAlertAdd(true)}  className='bi bi-person-plus-fill btn-tab' ></button></OverlayTrigger></div>;
   
   
 const columns = [
@@ -79,7 +83,7 @@ const columns = [
  
   },
   {
-    name: "Action",
+    name: "Supprimer",
     cell: (row) => <button className="bi bi-trash3" style={{'backgroundColor':'transparent','border':'none',color:'red',fontSize:'22px'}} onClick={()=>handleButtonClick(row)}></button>
   }
   ];
@@ -113,8 +117,8 @@ const columns = [
           if (error.response) {
             // La requete a été faite et le serveur a répondu avec un code d'état qui se situe en dehors de la plage de 2xx
               if(error.response.status === 401){
-                // localStorage.setItem('role','')
-                // window.location.href='/login'
+                localStorage.setItem('role','')
+                window.location.href='/login'
               
               }
           } else if (error.request) {
@@ -160,7 +164,8 @@ const columns = [
                     contextActions={contextActions}
                     actions={actions}
 			              onSelectedRowsChange={handleRowSelected}
-                 
+                    contextMessage={{ singular: 'Administrateur', plural: 'Administrateurs', message: 'sélectionné(s)'} }
+                    noDataComponent="Aucun administrateur n'est trouvé"
 
         
         />

@@ -7,9 +7,9 @@ import {Container} from 'react-bootstrap'
 
 function verify() { 
     if (isLoggedIn()==='') {  
-          return  <Navigate to="/"/> 
+          return  <Navigate to="/login"/> 
     }
-    else{  <Navigate to="/"/> 
+    else{  <Navigate to="/login"/> 
              return <Router/> } 
 }
 function PublicRoutes() {
@@ -23,7 +23,7 @@ function PublicRoutes() {
      
         <Routes>
       
-        <Route path="/" element={<Login/>}/>
+        <Route path="/login" element={<Login/>}/>
      
        
 

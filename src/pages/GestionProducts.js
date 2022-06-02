@@ -10,6 +10,7 @@ import VoirPlus from '../composants/products/VoirPlus';
 import {BiDetail,BiSortAlt2} from 'react-icons/bi'
 import {RiDeleteBin2Line} from 'react-icons/ri'
 import {BsPencilSquare} from 'react-icons/bs'
+import {OverlayTrigger,Tooltip} from 'react-bootstrap'
   const BootyCheckbox = React.forwardRef(({ onClick, ...rest }, ref) => (
     <div className="form-check">
       <input
@@ -56,10 +57,11 @@ function GestionProducts(){
 
     const actions =
      <div style={{width:"100%", 'textAlign':'center'}}>
-      <label htmlFor="search" className='bi bi-search'></label>
-       <input id="search" type="text" onChange={handleSearch} className='search' placeholder='nom,categorie,description,ref,...' />
-        <button className='bi bi-arrow-repeat btn-add' key="refrech"  onClick={()=> window.location.href='/produits'}   style={{'marginLeft':'0%' ,'backgroundColor':'transparent','border':'none'}} > </button>
-        <button className='bi bi-patch-plus btn-add' key="add"  onClick={()=> setAlertAdd(true)}   style={{'marginLeft':'0%' ,'backgroundColor':'transparent','border':'none'}} > </button>
+      <label htmlFor="search" className='bi bi-search btn-tab'></label>
+       <input id="search" type="text" onChange={handleSearch} className='search' placeholder=' Rechercher par nom,categorie,description,ref,...' />
+       <OverlayTrigger placement="bottom" overlay={<Tooltip >Ajouter un nouveau produit</Tooltip>} >
+        <button className='bi bi-plus-circle btn-tab' key="add"  onClick={()=> setAlertAdd(true)} > </button>
+        </OverlayTrigger>
         </div>; 
 
 
@@ -109,9 +111,10 @@ function GestionProducts(){
     {
       name: "Action",
       cell: (row) => <div> 
-          <BiDetail style={{color:'green',fontSize:'22px'}} onClick={()=>handleButtonShowMore(row)}/>
-          <RiDeleteBin2Line style={{color:'red',fontSize:'22px'}} onClick={()=>handleButtonDelete(row)}/>
-          <BsPencilSquare style={{color:'blue',fontSize:'20px'}} onClick={()=>handleButtonUpdate(row)}/>
+       <BiDetail style={{color:'green',fontSize:'22px'}} onClick={()=>handleButtonShowMore(row)}/>
+      <RiDeleteBin2Line style={{color:'red',fontSize:'22px'}} onClick={()=>handleButtonDelete(row)}/>
+      <BsPencilSquare style={{color:'blue',fontSize:'20px'}} onClick={()=>handleButtonUpdate(row)}/>
+
           </div>,
 
     },
@@ -219,7 +222,8 @@ function GestionProducts(){
                       actions={actions}
                       onSelectedRowsChange={handleRowSelected}
                       sortIcon={<BiSortAlt2/>}
-
+                      contextMessage={{ singular: 'Produit', plural: 'Produits', message: 'sélectionné(s)'} }
+                      noDataComponent="Aucun produit n'est trouvé"
 
 
           />

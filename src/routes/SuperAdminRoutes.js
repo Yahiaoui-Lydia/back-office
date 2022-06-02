@@ -14,6 +14,8 @@ import GestionB2B from '../pages/GestionB2B'
 import GestionDevis from  '../pages/GestionDevis'
 import GestionAdmins from '../pages/GestionAdmins';
 import ListDevisValides from '../pages/ListDevisValides';
+import ListB2B from '../pages/ListB2B'
+import ListB2C from '../pages/ListB2C';
 
 
 function verify() { 
@@ -47,7 +49,9 @@ function SuperAdminRoutes() {
              <Route path="/devisValide" element={<ListDevisValides/>}/>
              <Route path="/devisNonValide" element={<GestionDevis/>}/>
              <Route path="/b2b" element={<GestionB2B />}/>
+             <Route path="/listb2b" element={<ListB2B/>}/>
              <Route path="/admins" element={<GestionAdmins />}/>
+             <Route path="/b2c" element={<ListB2C />}/>
         </Routes>
         </div>
         </div>
