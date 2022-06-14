@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Modal,Button,Form,Row,Col}from "react-bootstrap"
+import {Modal,Form,Row,Col}from "react-bootstrap"
 import axios from "axios";
 import InputUpdate from "./InputUpdate"
 function UpdateProducts(props){
@@ -35,9 +35,6 @@ function UpdateProducts(props){
   
     }
     const handleSubmit = (event) => {
-       const tab = props.id.map((i)=>{return(i)})
-       const id =tab[0]
-      
    const form = event.currentTarget;
    if (form.checkValidity() === true) {
     const tab = props.id.map((i)=>{return(i)})
@@ -137,94 +134,112 @@ function UpdateProducts(props){
    ;getCategories();}
   ,[] )
     return (
+
+<Modal
+{...props}
+size="lg"
+aria-labelledby="contained-modal-title-vcenter"
+centered
+>
+<Modal.Header closeButton>
+  <Modal.Title id="contained-modal-title-vcenter" className="titre-forms" >
+ MODIFIER UN PRODUIT
+  </Modal.Title>
+</Modal.Header>
+<Modal.Body>
+{props.selectedrow.map((row)=>{return( 
+<Form noValidate validated={validated} onSubmit={handleSubmit}>
         
-        <Modal
-       {...props}
-      
-       aria-labelledby="contained-modal-title-vcenter"
-       centered
-     >
-       <Modal.Header closeButton>
-         <Modal.Title id="contained-modal-title-vcenter" >
-       Modifier un produit
-         </Modal.Title>
-       </Modal.Header>
-       <Modal.Body>
-       {props.selectedrow.map((row)=>{return( 
-     
-       <Form noValidate validated={validated} onSubmit={handleSubmit} className=' mx-3 my-3 pb-3 px-3' key={row.id}>
-               
-               <Row className=" forms-limiter" >
-          
-               
-               <Form.Label style={{color:'red'}}> {erreur?erreur:null} </Form.Label>
-               {image.preview ? <img alt="produit" src={image.preview} style={{width:'200px',height:'200px',borderRadius:'50%'}}  />:<img style={{width:'200px',height:'200px',borderRadius:'50%'}} src={process.env.REACT_APP_API_GET_IMAGE + row.photo}  />}
-               <Form.Group  as={Row} className='forms-group 'controlId='nom'>
-                           <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                         
-                          <Form.Control   onChange={handleChangeNom}  type="text"  placeholder={row.nom} className='forms-control py-0 my-0 '/>
-                           </Col>
-               </Form.Group>
-               
-               <Form.Group  as={Row} className='forms-group '>
-                           <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                           <Form.Control   onChange={handleChangePrixGros}  type="number" step="any"placeholder={row.prixGros} className='forms-control py-0 my-0 '/>
-                           </Col>
-               </Form.Group>
-               <Form.Group  as={Row} className='forms-group '>
-                           <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                           <Form.Control   onChange={handleChangePrixDetail} type="number" step="any" placeholder={row.prixDetail} className='forms-control py-0 my-0 '/>
-                           </Col>
-               </Form.Group>
-               <Form.Group  as={Row} className='forms-group '>
-                           <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                           <Form.Control   onChange={handleChangeRef} type="text" placeholder={row.ref} className='forms-control py-0 my-0 '/>
-                           </Col>
-               </Form.Group>
+        <Row className=" forms-limiter" style={{'paddingTop':'0px'}} >
+   
+        {erreur? <Form.Label style={{color:'red'}}> {erreur} </Form.Label>:null}
+        {/* <Form.Label style={{color:'red'}}> {erreur?erreur:null} </Form.Label> */}
 
-               <Form.Group  as={Row} className='forms-group '>
-                           <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                           <Form.Control   onChange={handleChangeDescription} type="textarea" placeholder={row.description} className='forms-control py-0 my-0 '/>
-                           </Col>
-               </Form.Group>
+        <Row  style={{marginLeft:'0px'}} >
+          <Col style={{'paddingTop':'20px','marginRight':'50px'}}>
+          <Form.Group  as={Row} className='forms-group image 'controlId="photo" >
+          {image.preview ? <img alt="produit" src={image.preview} style={{'height':'200px','width':'500px',margin:'0px','paddingLeft':'0px','paddingRight':'0px'}}/>:<img  style={{'height':'200px','width':'500px',margin:'0px','paddingLeft':'0px','paddingRight':'0px'}} alt="produit" src={process.env.REACT_APP_API_GET_IMAGE + row.photo}  />}
+          <label className="bi bi-upload btn-file" > Importer
+            <Form.Control   type='file' name='file'  onChange={handleFileChange} style={{'width':'100%'}} className='btn-forms' />
+                   
+          </label>
+                   
+                    
+                    
+        </Form.Group>
+        <Form.Group  as={Row} className='forms-group 'controlId="Description">   
+        <label>Description</label>
+                    <Form.Control   onChange={handleChangeDescription}  as="textarea" placeholder={row.description} className='forms-input forms-textarea py-0 my-0 '/>
+                   
+                   
+        </Form.Group>
 
-
-               <Form.Group  as={Row} className='forms-group ' >
-                           <Form.Label   column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                           <Col>
-                           <Form.Select  onChange={handleChangeCategorie} >
-                               <option value={row.categorie} >{row.categorie}</option>
-                              
-                               {
-                                 listCategorie.map((categorie)=>{return( <option key={categorie.id} value={categorie.nom}>{categorie.nom}</option>)})
-                               }
-                           </Form.Select>
-                                                       </Col>
-               </Form.Group>
-               <Form.Group  as={Row} className='forms-group '>
+          </Col>
+          <Col>
+         <label>Nom</label>
+        
+          <Form.Control onChange={handleChangeNom}  placeholder={row.nom} type="text"  className='forms-input py-0 my-0 '/>
             
-                           <Col>
-                           <Form.Control   type='file' name='file' onChange={handleFileChange}/>
-                           </Col>
-               </Form.Group>
 
-               
-                  <InputUpdate list={(l)=>setInputList(l)} selectedP={props.selectedrow}></InputUpdate>
+          <label>Prix de gros</label>
+          
+            <Form.Control   onChange={handleChangePrixGros}   type="number" step="any" placeholder={row.prixGros} className='forms-input py-0 my-0 '/>
+            <label>Prix de detail</label>
+          
 
-               </Row>
-               <button onClick={props.onHide}  className='bna btn'> Annuler</button>
-               <Button  type="submit"  className='btn'>Modifier</Button>
- </Form>
-         )})}
+      
+             <Form.Control   onChange={handleChangePrixDetail} type="number" step="any" placeholder={row.prixDetail} className='forms-input py-0 my-0 ' ></Form.Control>
+         
+             <label>Référence</label>
+
+
+                   <Form.Control   onChange={handleChangeRef} type="text" placeholder={row.ref}  className='forms-input py-0 my-0 '/>
+                   
+         
+                   <label>Catègorie</label>
+        
+              
+              <Form.Select aria-label="Default select example" onChange={handleChangeCategorie}  className='forms-input'>
+              <option value={row.categorie} >{row.categorie}</option>
+                       
+                        {
+                          listCategorie.map((row)=>{return( <option key={row.id} value={row.nom}>{row.nom}</option>)})
+                        }
+                    </Form.Select> 
+         
+
+
      
-       </Modal.Body>
-     
-     </Modal>
+          </Col>
+        </Row >
+       
+        <Row style={{  'marginTop':'10px'}}>
+        <label className="titre-forms">Caracterestiques supplimantaires</label>
+        
+        <InputUpdate list={(l)=>setInputList(l)} selectedP={props.selectedrow}></InputUpdate>
+        
+        </Row>
+        </Row>
+        <Row className="forms-footer">
+          <Col style={{'textAlign':'center'}}>
+        <button  onClick={props.onHide}  className='btn-secondaire '>Fermer</button>
+    
+        </Col>
+        <Col style={{'textAlign':'center'}}>
+        
+        <button  type="submit"  className=' btn-principal' style={{width:'200px'}}>Modifier </button>
+        </Col>
+        </Row>
+</Form>
+ 
+ )})}
+</Modal.Body>
+
+</Modal>
+
+
+
+
        );
 }
 export default UpdateProducts

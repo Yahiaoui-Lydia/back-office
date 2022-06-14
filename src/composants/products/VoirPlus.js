@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
- import {Modal}from "react-bootstrap"
+ import {Col, Modal,Row}from "react-bootstrap"
 import axios from "axios";
  function VoirPlus(props){
      const[attributs,setattributs]=useState([])
@@ -18,21 +18,40 @@ import axios from "axios";
         
         <Modal
        {...props}
-      
+       size="lg"
        aria-labelledby="contained-modal-title-vcenter"
        centered
      >
          {props.selectedrow.map((row)=>{return( 
              <>
        <Modal.Header closeButton>
-         <Modal.Title id="contained-modal-title-vcenter" >
-         Informations sur {row.nom} 
-         </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter" className="titre-forms" >
+          FICHE PRODUIT
+          </Modal.Title>
        </Modal.Header>
          
        <Modal.Body>
-       <img style={{width:'200px',height:'200px',borderRadius:'50%'}} alt={row.nom} src={process.env.REACT_APP_API_GET_IMAGE + row.photo}  />
-       {attributs.map((att)=>{return <>{att.key}  {att.value}</>})}
+      
+         <Row>
+
+           <Col>
+           <img  alt={row.nom} src={process.env.REACT_APP_API_GET_IMAGE + row.photo}  style={{width:'100%','height':'200px'}} /><br></br>
+           <b>Description:</b>{row.description}
+           </Col>
+       
+           <Col >
+           
+          <b>Nom:</b>{row.nom}<br></br>
+           <b>Prix de gros:</b>{row.prixGros} DA<br></br>
+           <b>Prix de detail:</b>{row.prixDetail} DA<br></br>
+           <b>Référence:</b>{row.ref}<br></br>
+           <b>Categorie:</b>{row.categorie}<br></br>
+         
+           {attributs.map((att)=>{return <> <b>{att.key}:</b> {att.value} <br></br></>})}
+           </Col>
+           </Row> 
+           
+     
        </Modal.Body></>
     )})}
      </Modal>

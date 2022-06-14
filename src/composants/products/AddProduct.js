@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import {Modal,Button,Form,Row,Col}from "react-bootstrap"
+import {Modal,Form,Row,Col, FloatingLabel}from "react-bootstrap"
 import axios from "axios";
 import InputAdd from "./InputAdd";
 function AddProduct(props){
@@ -62,12 +62,11 @@ function AddProduct(props){
                   config: { headers: {'Content-Type': 'multipart/form-data','Authorization':  csrfToken },withCredentials: true}
               }).then(async(response)=>{
                 //update data base column photo
-                axios.post(process.env.REACT_APP_API_UPDATE_IMAGE,{id,filename}, { headers: {
-                  'Authorization':  csrfToken
-                },withCredentials: true    }).then((response)=>{
+                axios.post(process.env.REACT_APP_API_UPDATE_IMAGE,{id,filename}, { headers: { 'Authorization':  csrfToken},withCredentials: true    })
+                .then((response)=>{
                  window.location.href='/produits'
                 })
-
+                window.location.href='/produits'
 
               })
            
@@ -77,7 +76,7 @@ function AddProduct(props){
             if (error.response) {
               // La requete a été faite et le serveur a répondu avec un code d'état qui se situe en dehors de la plage de 2xx
                 if(error.response.status === 400){
-                  setErreur('la categorie indiquée existe deja')
+                  setErreur('le produit indiquée existe deja')
                 }
                
             } else if (error.request) {
@@ -125,88 +124,97 @@ function AddProduct(props){
          
          <Modal
         {...props}
-       
+        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" >
-          Ajouter un produit
+          <Modal.Title id="contained-modal-title-vcenter" className="titre-forms" >
+          AJOUTER UN NOUVEAU PRODUIT
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form noValidate validated={validated} onSubmit={handleSubmit} className=' mx-3 my-3 pb-3 px-3'>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 
-                <Row className=" forms-limiter" >
+                <Row className=" forms-limiter" style={{'paddingTop':'0px'}} >
            
-                
-                <Form.Label style={{color:'red'}}> {erreur?erreur:null} </Form.Label>
+                {erreur? <Form.Label style={{color:'red'}}> {erreur} </Form.Label>:null}
+                {/* <Form.Label style={{color:'red'}}> {erreur?erreur:null} </Form.Label> */}
 
-                <Form.Group  as={Row} className='forms-group 'controlId="nom">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangeNom} required  max={14} type="text" placeholder="Nom" className='forms-control py-0 my-0 '/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer le nom du produit</Form.Control.Feedback>
-                            </Col>
+                <Row  style={{marginLeft:'0px'}} >
+                  <Col style={{'paddingTop':'20px','marginRight':'50px'}}>
+                  <Form.Group  as={Row} className='forms-group image 'controlId="photo" >
+                  {image.preview ? <img alt="produit" src={image.preview} style={{'height':'200px','width':'500px',margin:'0px','paddingLeft':'0px','paddingRight':'0px'}}/>:<img  style={{'height':'200px','width':'500px',margin:'0px','paddingLeft':'0px','paddingRight':'0px'}} alt="icon" src="iconeImage.png"  />}
+                  <label className="bi bi-upload btn-file" > Importer
+                    <Form.Control   type='file' name='file'  onChange={handleFileChange} style={{'width':'100%'}} className='btn-forms' />
+                            <Form.Control.Feedback type="invalid">Veuillez inserer une photo pour ce produit</Form.Control.Feedback>
+                  </label>
+                           
+                            
+                            
                 </Form.Group>
-                
-                <Form.Group  as={Row} className='forms-group 'controlId="prixGros">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangePrixGros} required  type="number" step="any" placeholder="Prix de gros" className='forms-control py-0 my-0 '/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer un prix de gros valide</Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
-                <Form.Group  as={Row} className='forms-group 'controlId="prixDetail">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangePrixDetail} required  type="number" step="any" placeholder="Prix de détail " className='forms-control py-0 my-0 '/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer un prix de détail valide </Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
-                <Form.Group  as={Row} className='forms-group 'controlId="ref">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangeRef} required type="text" placeholder="Référence" className='forms-control py-0 my-0 '/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer la référence </Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
-                <Form.Group  as={Row} className='forms-group 'controlId="Description">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangeDescription} required  type="textarea" placeholder="Description" className='forms-control py-0 my-0 '/>
+                <Form.Group  as={Row} className='forms-group 'controlId="Description">   
+                            <Form.Control   onChange={handleChangeDescription} required  as="textarea" placeholder="Description" className='forms-input forms-textarea py-0 my-0 '/>
                             <Form.Control.Feedback type="invalid">Veuillez inserer une description pour ce produit</Form.Control.Feedback>
-                            </Col>
+                           
                 </Form.Group>
 
+                  </Col>
+                  <Col>
+                 
+                  <FloatingLabel controlId="floatingNom" label="Nom" style={{'marginBottom':'12px'}} >
+                  <Form.Control   onChange={handleChangeNom} required placeholder="Nom" type="text"  className='forms-input py-0 my-0 '/>
+                    <Form.Control.Feedback type="invalid">Veuillez inserer le nom du produit</Form.Control.Feedback>
+                  </FloatingLabel>
 
-                <Form.Group  as={Row} className='forms-group ' controlId="categorie">
-                            <Form.Label   column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Select aria-label="Default select example" onChange={handleChangeCategorie} required>
+                  <FloatingLabel controlId="floatingPG" label="Prix de gros" style={{'marginBottom':'12px'}}>
+                    <Form.Control   onChange={handleChangePrixGros} required  type="number" step="any" placeholder="Prix de gros" className='forms-input py-0 my-0 '/>
+                    <Form.Control.Feedback type="invalid">Veuillez inserer un prix de gros valide</Form.Control.Feedback>
+                  </FloatingLabel>
+
+                  <FloatingLabel controlId="floatingPD" label="Prix de détail" style={{'marginBottom':'12px'}} >
+                     <Form.Control   onChange={handleChangePrixDetail} required  type="number" step="any" placeholder="Prix de détail " className='forms-input py-0 my-0 '/>
+                            <Form.Control.Feedback type="invalid">Veuillez inserer un prix de détail valide </Form.Control.Feedback>
+                  </FloatingLabel>
+
+                  <FloatingLabel controlId="floatingRef" label="Référence" style={{'marginBottom':'12px'}} >
+                           <Form.Control   onChange={handleChangeRef} required type="text" placeholder="Référence" className='forms-input py-0 my-0 '/>
+                            <Form.Control.Feedback type="invalid">Veuillez inserer une référence </Form.Control.Feedback>
+                  </FloatingLabel>
+
+                  <FloatingLabel controlId="floatingRef" label="Categorie" style={{'marginBottom':'12px'}}>
+                      
+                      <Form.Select aria-label="Default select example" onChange={handleChangeCategorie} required className='forms-input'>
                                 <option></option>
                                
                                 {
                                   listCategorie.map((row)=>{return( <option key={row.id} value={row.nom}>{row.nom}</option>)})
                                 }
-                            </Form.Select>
-                                                        </Col>
-                </Form.Group>
-                <Form.Group  as={Row} className='forms-group 'controlId="photo">
-                {image.preview && <img alt ='produit' src={image.preview} width='10' height='100'  />}
-                            <Col>
-                            <Form.Control   type='file' name='file' onChange={handleFileChange}/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer une description pour ce produit</Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
-
-                <InputAdd list={(l)=>setInputList(l)}></InputAdd>
-
+                            </Form.Select> 
+                  </FloatingLabel>
         
-    
+
+             
+                  </Col>
+                </Row >
+               
+                <Row style={{  'marginTop':'10px'}}>
+                <label className="titre-forms">Caracterestiques supplimantaires</label>
+                
+                <InputAdd list={(l)=>setInputList(l)}></InputAdd>
                 </Row>
-                <Button  type="submit"  className='btn'>Ajouter </Button>
-                <button onClick={props.onHide}  className='bna btn'> Annuler</button>
+                </Row>
+                <Row className="forms-footer">
+          <Col style={{'textAlign':'center'}}>
+        <button  onClick={props.onHide}  className='btn-secondaire '>Fermer</button>
+    
+        </Col>
+        <Col style={{'textAlign':'center'}}>
+        
+        <button  type="submit"  className=' btn-principal' style={{width:'200px'}}>Ajouter </button>
+        </Col>
+        </Row>
+                 
   </Form>
          
       

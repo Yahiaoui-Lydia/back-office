@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Modal,Button,Form,Row,Col}from "react-bootstrap"
+import {Modal,Form,Row,Col,FloatingLabel}from "react-bootstrap"
 import axios from "axios";
 
 function AddAdmin(props){
@@ -22,7 +22,7 @@ function AddAdmin(props){
         let csrfToken = localStorage.getItem('csrfToken');
         axios.post(process.env.REACT_APP_API_addNewAdmin, {password,email,nom,prenom  }, { headers: {
           'Authorization':  csrfToken
-        },withCredentials: true    })
+        },withCredentials: true})
           .then((response) => {
            
            window.location.href='/admins'
@@ -58,8 +58,8 @@ function AddAdmin(props){
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" >
-          Ajouter un nouvel administrateur
+          <Modal.Title id="contained-modal-title-vcenter" className="titre-forms" >
+          AJOUTER UN NOUVEL ADMINISTRATEUR
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -69,43 +69,38 @@ function AddAdmin(props){
            
                 
                 <Form.Label style={{color:'red'}}> {erreur?erreur: null} </Form.Label>
-
-                <Form.Group  as={Row} className='forms-group 'controlId="nom">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangeNom} required  max={14} type="text" placeholder="Nom" className='forms-control py-0 my-0 '/>
+                <FloatingLabel controlId="floatingNom" label="Nom" style={{'marginBottom':'12px'}} >
+                            <Form.Control   onChange={handleChangeNom} required   type="text" placeholder="Nom" className='forms-input py-0 my-0 '/>
                             <Form.Control.Feedback type="invalid">Veuillez inserer un nom</Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
+                            </FloatingLabel>
 
 
-                <Form.Group  as={Row} className='forms-group ' controlId="prenom">
-                            <Form.Label   column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control onChange={handleChangePrenom} required   type="text" placeholder="Prenom" className='forms-control py-0 my-0 '/>
+                            <FloatingLabel controlId="floatingNom" label="Prenom" style={{'marginBottom':'12px'}} >
+                            <Form.Control onChange={handleChangePrenom} required   type="text" placeholder="Prenom" className='forms-input py-0 my-0 '/>
                             <Form.Control.Feedback type="invalid">Veuillez inserer un prénom</Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
+                            </FloatingLabel>
                 
-                <Form.Group  as={Row} className='forms-group ' controlId="email">
-                            <Form.Label  column sm={2}  className='bi bi-envelope forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control  onChange={handleChangeEmail} required type="email" placeholder="votre E-mail" className='forms-control py-0 my-0 '/>
+                            <FloatingLabel controlId="floatingNom" label="E-mail" style={{'marginBottom':'12px'}} >
+                            <Form.Control  onChange={handleChangeEmail} required type="email" placeholder="E-mail" className='forms-input py-0 my-0 '/>
                             <Form.Control.Feedback type="invalid">Veuillez saisir une adresse email correcte </Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
-                
-                <Form.Group  as={Row}  controlId="password"   className='forms-group'>
-                            <Form.Label column sm={2} className='bi bi-lock  forms-label' ></Form.Label>
-                            <Col >
-                            <Form.Control  onChange={handleChangePassword} required type="password" placeholder="votre mot de passe" className='forms-control py-0 my-0 ' />
+                            </FloatingLabel>
+                            <FloatingLabel controlId="floatingNom" label="Mot de passe"  style={{'marginBottom':'12px'}} >
+                            <Form.Control  onChange={handleChangePassword} required type="password" placeholder="votre mot de passe" className='forms-input py-0 my-0 ' />
                             <Form.Control.Feedback type="invalid">Veuillez saisir votre mot de passe  </Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
+                            </FloatingLabel>
 
                 </Row>
-                <Button  type="submit"  className='btn'>Ajouter </Button>
-                <button onClick={props.onHide}  className='bna btn'> Annuler</button>
+                
+                <Row style={{'marginTop':'25px'}}>
+          <Col style={{'textAlign':'center'}}>
+        <button  onClick={props.onHide}  className='btn-secondaire ' style={{width:'100px'}}>Fermer</button>
+    
+        </Col>
+        <Col style={{'textAlign':'center'}}>
+        
+        <button  type="submit"  className=' btn-principal' style={{width:'100px'}}>Ajouter </button>
+        </Col>
+        </Row>
   </Form>
          
       

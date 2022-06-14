@@ -4,6 +4,7 @@ import {HiMenu} from 'react-icons/hi'
 import {IoNotifications,IoPersonAddSharp,IoPersonCircleSharp,IoLogOut} from 'react-icons/io5'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios'
+import logout from '../utils/logout'
 function NavBar(props) {
   const [titre,setTitre]=useState('')
 
@@ -35,6 +36,7 @@ useEffect( () => {
       if(location.pathname === '/devisNonValide'){setTitre('GESTION DES DEVIS NON VALIDÉS')}
       if(location.pathname === '/b2b'){setTitre('GESTION DES UTILISATEURS B2B')}
       if(location.pathname === '/b2c'){setTitre('Liste des clients B2C')}
+      if(location.pathname === '/listb2b'){setTitre('Liste des clients B2B')}
       
 }, [location.pathname]);
 
@@ -81,7 +83,7 @@ const popover2 = (
     <Navbar.Toggle />
         
     <Navbar.Collapse className="justify">
-    <div style={{width:'70%',height:'100%',fontSize:'28px',fontWeight:'bold',textAlign:'center'}}>
+    <div style={{width:'70%',height:'100%',fontSize:'28px',fontWeight:'bold',textAlign:'center'}} className='text-dev'>
       {titre}
       </div>
       <Nav>
@@ -108,7 +110,7 @@ const popover2 = (
           </Nav.Item>
           <Nav.Item>
           <span id="group">
-                      <IoLogOut className="nav-icons"/>
+                      <IoLogOut className="nav-icons" onClick={logout}/>
                       </span>
           </Nav.Item>
       

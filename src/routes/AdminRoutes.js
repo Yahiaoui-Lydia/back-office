@@ -12,6 +12,9 @@ import GestionProducts from '../pages/GestionProducts'
 import GestionCategories from '../pages/GestionCategories'
 import GestionB2B from '../pages/GestionB2B'
 import GestionDevis from  '../pages/GestionDevis'
+import ListDevisValides from '../pages/ListDevisValides';
+import ListB2B from '../pages/ListB2B'
+import ListB2C from '../pages/ListB2C';
 
 
 
@@ -39,11 +42,14 @@ function AdminRoutes() {
         <div >
         
         <Routes>
-             <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Home/>}/>
              <Route path="/produits" element={<GestionProducts/>}/>
              <Route path="/categories" element={<GestionCategories/>}/>
-             <Route path="/devis" element={<GestionDevis/>}/>
+             <Route path="/devisValide" element={<ListDevisValides/>}/>
+             <Route path="/devisNonValide" element={<GestionDevis/>}/>
              <Route path="/b2b" element={<GestionB2B />}/>
+             <Route path="/listb2b" element={<ListB2B/>}/>
+             <Route path="/b2c" element={<ListB2C />}/>
         </Routes>
         </div>
         </div>

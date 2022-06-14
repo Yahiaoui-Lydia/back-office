@@ -73,7 +73,7 @@ function GestionProducts(){
       },
       {
         name: "image",
-        cell: (row) =><img alt={row.nom} src={process.env.REACT_APP_API_GET_IMAGE + row.photo} style={{height:'70px',width:'70px',borderRadius:'50%'}}></img>
+        cell: (row) =><img alt={row.nom} src={process.env.REACT_APP_API_GET_IMAGE + row.photo} style={{height:'70px',width:'70px',borderRadius:'30%'}}></img>
       },
     {
       name: "Nom",
@@ -90,24 +90,9 @@ function GestionProducts(){
       selector: (row) => row.prixDetail,
       sortable: true
     },
-    {
-      name: "Description",
-      selector: (row) => row.description,
-      sortable: true
-    },
-    {
-    name: "Référence",
-    selector: (row) => row.ref,
-    sortable: true
-  },
-
-    {
-    name: "Catégorie",
-    selector: (row) => row.categorie,
-    sortable: true
+  
 
 
-    },
     {
       name: "Action",
       cell: (row) => <div> 

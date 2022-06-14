@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import {Modal,Button,Form,Row,Col}from "react-bootstrap"
+import {Modal,Form,Row,Col, FloatingLabel}from "react-bootstrap"
 import axios from "axios";
 function AddCategorie(props){
     const [erreur, setErreur] = useState('');
     const [validated, setValidated] = useState(false);
     const [nom, setnom] = useState('');
-    const [parent, setparent] = useState('');
+
 
 
     const handleChangeNom= (event) => { setnom(event.target.value) }
-    const handleChangeParent= (event) => { setparent(event.target.value) }
+ 
      const handleSubmit = (event) => {
   
   
       const form = event.currentTarget;
       if (form.checkValidity() === true) {
         let csrfToken = localStorage.getItem('csrfToken');
-        axios.post(process.env.REACT_APP_API_addCategorie, {nom,parent}, { headers: {
+        axios.post(process.env.REACT_APP_API_addCategorie, {nom}, { headers: {
           'Authorization':  csrfToken
         },withCredentials: true    })
           .then((response) => {
@@ -54,45 +54,41 @@ function AddCategorie(props){
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter" >
-          Ajouter une categorie
+        <Modal.Title id="contained-modal-title-vcenter" className="titre-forms" >
+         AJOUTER UNE CATEGORIE
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form noValidate validated={validated} onSubmit={handleSubmit} className=' mx-3 my-3 pb-3 px-3'>
                 
-                <Row className=" forms-limiter" >
+                <Row className=" pb-5" >
            
                 
                 <Form.Label style={{color:'red'}}> {erreur?erreur:null} </Form.Label>
 
-                <Form.Group  as={Row} className='forms-group 'controlId="nom">
-                            <Form.Label  column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Control   onChange={handleChangeNom} required  max={14} type="text" placeholder="Nom" className='forms-control py-0 my-0 '/>
-                            <Form.Control.Feedback type="invalid">Veuillez inserer le nom de la categorie</Form.Control.Feedback>
-                            </Col>
-                </Form.Group>
+                <FloatingLabel controlId="floatingNom" label="Nom" style={{'marginBottom':'12px'}} >
+                  <Form.Control   onChange={handleChangeNom} required placeholder="Nom" type="text"  className='forms-input py-0 my-0 '/>
+                    <Form.Control.Feedback type="invalid">Veuillez inserer le nom de la categorie</Form.Control.Feedback>
 
+                  </FloatingLabel>
 
-                <Form.Group  as={Row} className='forms-group ' controlId="prenom">
-                            <Form.Label   column sm={2}  className='bi bi-person  forms-label '></Form.Label>
-                            <Col>
-                            <Form.Select aria-label="Default select example" onChange={handleChangeParent}>
-                                <option></option>
-                               
-                                {
-                                  props.rows.map((row)=>{return( <option key={row.id} value={row.nom}>{row.nom}</option>)})
-                                }
-                            </Form.Select>
-                                                        </Col>
-                </Form.Group>
-
+             
+ 
+            
                 </Row>
-                <Button  type="submit"  className='btn'>Ajouter </Button>
-                <button onClick={props.onHide}  className='bna btn'> Annuler</button>
+
+               
+          
+                <Col style={{'textAlign':'center'}}>
+                
+                <button  type="submit"  className=' btn-principal' style={{width:'200px'}}>Ajouter </button>
+                </Col>
+               
   </Form>
-         
+  <Col style={{'textAlign':'center'}}>
+                <button  onClick={props.onHide}  className='btn-secondaire '>Fermer</button>
+            
+                </Col>
       
         </Modal.Body>
       

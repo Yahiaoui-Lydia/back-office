@@ -5,7 +5,7 @@ import axios from 'axios'
 import {BsShieldLockFill} from 'react-icons/bs'
  export const Print = React.forwardRef((props, ref) => {     
   return (
-    <div ref={ref}  style={{'margin':'15px'}}>
+    <div ref={ref}  style={{'margin':'15px'}} className='text-dev'>
       <div style={{'borderBottom':'solid','paddingBottom':'10px'}}>
         <Row>
       <Col style={{width:'30%'}}> 
@@ -110,7 +110,7 @@ function ShowValidDevis(props){
     var csrfToken = localStorage.getItem('csrfToken');
     await axios.post(process.env.REACT_APP_API_ValiderDevis+props.devis, { headers: {'Authorization':  csrfToken},withCredentials: true    })
     .then((response)=>{
-      window.location.href='/devis'
+      window.location.href='/devisValide'
     })
   }
   const componentRef = useRef();
@@ -133,12 +133,13 @@ function ShowValidDevis(props){
            devis={props.devis}
            total={props.totall}
            ></Print>
-        <Row style={{'borderTop':'solid'}}>
-          
-        <Col> <ReactToPrint trigger={() => <button>PDF</button>} content={() => componentRef.current} /></Col>
-      
-        <Col>  <button onClick={()=>props.onHide()}>Fermer</button></Col>
+             <Row className="forms-footer">
+        <Col style={{'textAlign':'center'}}> <button onClick={()=>props.onHide()}  className='btn-secondaire ' style={{width:'70px'}}>Fermer</button></Col>
+        <Col style={{'textAlign':'center'}}> <ReactToPrint trigger={() => <button  className=' btn-principal' style={{width:'70px'}}>PDF</button>} content={() => componentRef.current} /></Col>
+       
+
       </Row>
+     
    </Modal.Body>
     </Modal>
       );

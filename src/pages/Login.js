@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import {Row,Button, Form,Col} from 'react-bootstrap'
+import {Row,Button, Form,Col,Container, FloatingLabel} from 'react-bootstrap'
 import axios from 'axios';
 
 
@@ -51,45 +51,53 @@ console.log(process.env.REACT_APP_API_login)
   
 
   return (
-    <div className='App d-flex flex-column align-items-center' >
-    <Form noValidate validated={validated} onSubmit={handleSubmit} className='forms mx-3 my-3 pb-3 px-3'>
+    <Container> 
+    <Row className="justify-content-sm-center">
+
+      <Col sm={8}>
+    <Form noValidate validated={validated} onSubmit={handleSubmit} className=' mx-3 my-3 pb-3 px-3' style={{'border':'solid','borderRadius':'12%'}}>
   
-      <Row className=" forms-limiter" style={{}}>
-        <span className='forms-title mb-3'>Connexion</span>
+      <Row >
+    
+        <span className='titre-forms mb-3'>Connexion</span>
        
         <Form.Label style={{color:'red'}}> {erreur?erreur: null} </Form.Label>
-        Saisissez votre email et votre mot de passe ci-dessous pour vous connecte
-        <Form.Group  as={Row} className='forms-group ' controlId="email">
-                  <Form.Label  column sm={2}  className='bi bi-envelope forms-label '></Form.Label>
-                  <Col>
-                  <Form.Control onChange={handleChangeEmail} required type="email" placeholder="votre E-mail" className='forms-control py-0 my-0 '/>
-                  <Form.Control.Feedback type="invalid">Veuillez saisir une adresse email correcte </Form.Control.Feedback>
-                  </Col>
-        </Form.Group>
+        <div style={{'textAlign':'center','fontSize':'20px', fontWeight:'bold'}} >
+        Saisissez votre email et votre mot de passe ci-dessous pour vous connecter
+        </div>
 
-
-        <Form.Group  as={Row}  controlId="password"   className='forms-group'>
-                  <Form.Label column sm={2} className='bi bi-lock  forms-label' ></Form.Label>
-                  <Col >
-                  <Form.Control onChange={handleChangePassword} required type="password" placeholder="votre mot de passe" className='forms-control py-0 my-0 ' />
-                  <Form.Control.Feedback type="invalid">Veuillez saisir votre mot de passe  </Form.Control.Feedback>
-                  </Col>
-        </Form.Group>
        
+        <FloatingLabel controlId="floatingNom" label="E-mail" style={{'marginBottom':'12px','width':'70%','marginLeft':'15%'}} >
+                            <Form.Control  onChange={handleChangeEmail} required type="email" placeholder="E-mail" className='forms-input py-0 my-0 '/>
+                            <Form.Control.Feedback type="invalid">Veuillez saisir une adresse email correcte </Form.Control.Feedback>
+                            </FloatingLabel>
+        <FloatingLabel controlId="floatingNom" label="Mot de passe"  style={{'marginBottom':'12px','width':'70%','marginLeft':'15%'}} >
+        <Form.Control  onChange={handleChangePassword} required type="password" placeholder="Mot de passe" className='forms-input py-0 my-0 ' />
+        <Form.Control.Feedback type="invalid">Veuillez saisir votre mot de passe  </Form.Control.Feedback>
+        </FloatingLabel>
+      
+    <Row>
+        <Col style={{'textAlign':'right','marginTop':'20px'}}>
         <a href='/forgot-password' className='forms-link'> Mot de passe oublié ?</a>
-        <Button type="submit"  className='forms-btn'>Connexion </Button>
-     
+        </Col>
         </Row>
-        <a href='/register' className='forms-link'>Vous n'avez pas un compte ?inscrivez vous ici</a>
+        <Row style={{'marginLeft':'0px'}}>
+        <Col style={{'textAlign':'center'}}>
+        <Button type="submit"  className=' bs btn-principal' style={{marginTop:'30px','width':'70%'}}>Connexion </Button>
+        </Col>
+        </Row>
+        </Row>
+      
    
-       
+     
    
     </Form>
   
 
+    </Col>
 
-
-    </div>
+    </Row>
+    </Container>
   );
 }
 

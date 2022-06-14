@@ -5,10 +5,10 @@ import axios from 'axios'
 import {BsShieldLockFill} from 'react-icons/bs'
  export const Print = React.forwardRef((props, ref) => {     
   return (
-    <div ref={ref}  style={{'margin':'15px'}}>
+    <div ref={ref}  style={{'margin':'15px'}} className='text-dev'>
       <div style={{'borderBottom':'solid','paddingBottom':'10px'}}>
         <Row>
-      <Col style={{width:'30%'}}> 
+      <Col style={{width:'30%'}} > 
        <Row >
        <BsShieldLockFill style={{fontSize:'50px',padding:'0px',margin:'0px',width:'50px',}}/>
        <Col style={{'fontSize':'10px',marginTop:'5px'}}>
@@ -68,7 +68,7 @@ import {BsShieldLockFill} from 'react-icons/bs'
  <br></br>
 
   <table className='tab'>
-  <thead>
+  <thead >
   
 <tr>
 
@@ -133,11 +133,11 @@ function ShowDevis(props){
            devis={props.devis}
            total={props.totall}
            ></Print>
-        <Row style={{'borderTop':'solid'}}>
-          
-        <Col> <ReactToPrint trigger={() => <button>PDF</button>} content={() => componentRef.current} /></Col>
-        <Col>  <button onClick={()=>valider()}>Valider</button></Col>
-        <Col>  <button onClick={()=>props.onHide()}>Fermer</button></Col>
+        <Row className="forms-footer">
+        <Col style={{'textAlign':'center'}}> <button onClick={()=>props.onHide()}  className='btn-secondaire ' style={{width:'70px'}}>Fermer</button></Col>
+        <Col style={{'textAlign':'center'}}> <ReactToPrint trigger={() => <button  className=' btn-principal' style={{width:'70px'}}>PDF</button>} content={() => componentRef.current} /></Col>
+        <Col style={{'textAlign':'center'}}> <button onClick={()=>valider()} className=' btn-principal' style={{width:'70px'}}>Valider</button></Col>
+
       </Row>
    </Modal.Body>
     </Modal>

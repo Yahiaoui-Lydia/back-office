@@ -35,14 +35,13 @@ function GestionDevis() {
     const [erreur,setErreur]=useState('')
     const [date,setdate]=useState('')
     const [pending, setPending] =useState(true);
-    const [search, setSearch] = React.useState('');
     const [selectedRows, setSelectedRows] = React.useState([]);
     const [AlertDelete, setAlertDelete] = React.useState(false);
     const [AlertDetail, setAlertDetail] = React.useState(false);
-    const [AlertValider, setAlertValider] = React.useState(false);
     const[elements,setelements]=useState([])
     const[client,setclient]=useState([])
     const [devis,setdevis]=useState('')
+    const [search, setSearch] = React.useState('');
     const[total,setTotal]=useState(0)
     const handleRowSelected = React.useCallback(state => {
   
@@ -160,8 +159,7 @@ function GestionDevis() {
                        let t ={"nom":user.nom,"prenom":user.email,"id":user.id,'role':user.role}
                       tab.push(t)
                       setclient(tab)
-                      var ta =[]
-                      var pt=0
+               
                   await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
                 .then((response)=>{
                   response.data.map(async(e)=>{
@@ -225,9 +223,9 @@ function GestionDevis() {
     };
     const valider= async(row)=>{
       var csrfToken = localStorage.getItem('csrfToken');
-      await axios.post(process.env.REACT_APP_API_ValiderDevis+row.id, { headers: {'Authorization':  csrfToken},withCredentials: true    })
+      await axios.post(process.env.REACT_APP_API_ValiderDevis+row.id,{id:row.id} ,{ headers: {'Authorization':  csrfToken},withCredentials: true})
       .then((response)=>{
-        window.location.href='/devis'
+        window.location.href='/devisvalid'
       })
     }
         const getdevis = useCallback(async () => {
@@ -235,7 +233,11 @@ function GestionDevis() {
             var csrfToken = localStorage.getItem('csrfToken');
                   await axios.get(process.env.REACT_APP_API_Devis, { headers: {'Authorization':  csrfToken},withCredentials: true    })
             .then((response) => {
-            setlistDevis(response.data) 
+            setlistDevis(
+              response.data.filter(
+                (item) => { return(item.date.toLowerCase().includes(search.toLowerCase())) }    
+                 )
+              ) 
               setPending(false);
         
           
@@ -256,7 +258,7 @@ function GestionDevis() {
             })
        
          
-          }, []) 
+          }, [search]) 
           useEffect(() => {
   
             getdevis()
@@ -280,7 +282,7 @@ function GestionDevis() {
             date={date }
             client={client}
             totall={total}
-            tot='did'
+         
           />
           
             <DataTable
@@ -301,7 +303,9 @@ function GestionDevis() {
                         contextActions={contextActions}
                         actions={actions}
                               onSelectedRowsChange={handleRowSelected}
-                     
+                              contextMessage={{ singular: 'devis', plural: 'devis', message: 'sélectionné(s)'} }
+                              noDataComponent="Aucun devis n'est trouvé"
+        
     
             
             />

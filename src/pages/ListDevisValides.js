@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import axios from 'axios';   
 import DataTable from "react-data-table-component";
 import ShowValidDevis from "../composants/devis/ShowValidDevis"
-import {FaExpandArrowsAlt,FaRegCheckSquare,FaRegWindowClose} from 'react-icons/fa'
+import {FaExpandArrowsAlt} from 'react-icons/fa'
 const paginationOptions = {
 
 	rowsPerPageText: 'Nombre de lignes par page',
@@ -22,18 +22,12 @@ function ListDevisValides(){
     const [date,setdate]=useState('')
     const [pending, setPending] =useState(true);
     const [search, setSearch] = React.useState('');
-    const [selectedRows, setSelectedRows] = React.useState([]);
-    const [AlertDelete, setAlertDelete] = React.useState(false);
     const [AlertDetail, setAlertDetail] = React.useState(false);
     const[elements,setelements]=useState([])
     const[client,setclient]=useState([])
     const [devis,setdevis]=useState('')
     const[total,setTotal]=useState(0)
-    const handleRowSelected = React.useCallback(state => {
-  
-          setSelectedRows(state.selectedRows);
-  
-      }, []);
+ 
       const handleSearch = (event) => {setSearch(event.target.value);};
 
     
@@ -135,8 +129,6 @@ function ListDevisValides(){
                        let t ={"nom":user.nom,"prenom":user.email,"id":user.id,'role':user.role}
                       tab.push(t)
                       setclient(tab)
-                      var ta =[]
-                      var pt=0
                   await axios.get(process.env.REACT_APP_API_DevisElements+row.id , { headers: {'Authorization':  csrfToken},withCredentials: true    })
                 .then((response)=>{
                   response.data.map(async(e)=>{
@@ -197,9 +189,11 @@ function ListDevisValides(){
             var csrfToken = localStorage.getItem('csrfToken');
                   await axios.get(process.env.REACT_APP_API_DevisValide, { headers: {'Authorization':  csrfToken},withCredentials: true    })
             .then((response) => {
+
             setlistDevis(
-              response.data.filter(
-                (item) => { return(item.id===search||search==='')})
+             response.data.filter(
+                (item) => { return(item.date.toLowerCase().includes(search.toLowerCase())) }    
+                 )
               ) 
               setPending(false);
         
@@ -221,7 +215,7 @@ function ListDevisValides(){
             })
        
          
-          }, []) 
+          }, [search]) 
           useEffect(() => {
   
             getdevis()
@@ -259,8 +253,8 @@ function ListDevisValides(){
                         progressPending={pending}
                       
                         actions={actions}
-                              onSelectedRowsChange={handleRowSelected}
-                     
+                             
+                              noDataComponent="Aucun devis n'est trouvé"
     
             
             />

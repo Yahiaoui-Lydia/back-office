@@ -9,12 +9,13 @@ import {
   SidebarFooter,
   SidebarContent,SubMenu
 } from "react-pro-sidebar";
-
+import {Col,Row} from 'react-bootstrap'
 //import icons from react icons
 import {FaFileInvoiceDollar,FaProductHunt,FaUserCog,FaUser,FaUserTie } from "react-icons/fa";
 import {ImStatsDots}from 'react-icons/im'
 import {FiLogOut } from "react-icons/fi";
 import { BiCategoryAlt } from "react-icons/bi";
+import {BsShieldLockFill} from "react-icons/bs";
 
 
 //import sidebar css from react-pro-sidebar module and our custom css
@@ -37,12 +38,15 @@ const SideBarSuperAdmin = (props) => {
       <div id="header">
         {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
-          <SidebarHeader className='logo'>
-            <div className="logotext logo">
+          <SidebarHeader >
+           
               {/* small and big change using menucollapse state */}
-              <p>{menuCollapse ? "Logo" : "Big Logo"}</p>
+              {/* <p>{menuCollapse ? "Logo" : "Big Logo"}</p> */}
              
-            </div>
+              {menuCollapse ? <Row style={{'marginLeft':'0px'}} className='text-dev'><BsShieldLockFill style={{fontSize:'25px',padding:'0px',margin:'0px',width:'25px'}}/> <Col style={{'fontSize':'9px',padding:'0px'}}>PROVISION<br/>SECURITY<br/>SYSTEMS<br/></Col> </Row>
+       :<Row style={{'marginLeft':'50px'}} className='text-dev'><BsShieldLockFill style={{fontSize:'25px',padding:'0px',margin:'0px',width:'25px'}}/> <Col style={{'fontSize':'8px'}}>PROVISION<br/>SECURITY<br/>SYSTEMS<br/></Col> </Row>}
+       
+      
           
           </SidebarHeader>
           <SidebarContent>

@@ -72,12 +72,7 @@ const columns = [
   selector: (row) => row.nom,
   sortable: true
   },
-  {
-  name: "Catégorie Parente",
-  selector: (row) => row.parent,
-
  
-  },
   {
     name: "Supprimer",
     cell: (row) => <button className="bi bi-trash3" style={{'backgroundColor':'transparent','border':'none',color:'red',fontSize:'22px'}} onClick={()=>handleButtonDelete(row)}></button>,

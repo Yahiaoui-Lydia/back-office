@@ -1,22 +1,25 @@
 //sidebar
-$color1:rgb(0, 159, 157);
+$color1:rgb(30, 86, 160);
 //navbar
-$color2:rgb(205, 255, 235);
+$color2:rgb(214, 228, 240);
 //link,text 
-$color3:rgb(15, 10, 60);
+$color3:rgb(22, 49, 114);
 
-
+body{
+  color:$color3;
+}
 th, td {
-  border: 1px solid black;
+  border: 1px solid $color3;
   padding: 8px;
 }
 table {
   border-collapse: collapse;
   width: 100%;
+  color: $color3;
 }
 thead {
-	background-color: #333;
-	color: white;
+	background-color:white;
+	color: $color3;
 	font-size: 0.875rem;
 	text-transform: uppercase;
 	letter-spacing: 2%;
@@ -53,7 +56,13 @@ thead {
    
 }
   #header .pro-sidebar {
-    height: 615px;
+    height: 620px;
+  }
+  .pro-sidebar-header{
+    height: 55px!important;
+   padding-top: 13px;
+   padding-bottom: 13px;
+ 
   }
  
   #header .pro-sidebar {
@@ -61,8 +70,8 @@ thead {
     min-width: 100%;
   }
   #header .pro-sidebar.collapsed {
-    width: 80px;
-    min-width: 80px;
+    width: 90px;
+    min-width: 90px;
   }
   #header .pro-sidebar-inner {
     background-color:$color1;
@@ -78,6 +87,9 @@ thead {
   #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
     margin: 20px 0px;
     font-weight: bold;
+   
+    padding-top: 0px;
+    padding-bottom: 0px  ;
   }
   //icon
   #header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item .pro-icon-wrapper {
@@ -87,7 +99,8 @@ thead {
   }
 
   #header .logo {
-    padding: 20px;
+    padding: 0px;
+    
   }
 
   .pro-sidebar .pro-menu > ul > .pro-sub-menu > .pro-inner-list-item {
@@ -184,4 +197,109 @@ flex: none !important;
 .gtQiQo > * {
   text-align: center!important;
   margin-left: 0px !important;
+}
+
+//formulaire
+
+.text-dev{
+  color:$color3
+}
+.forms-footer{
+  color:$color3;
+  border-top:solid;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+.modal-title {
+  width: 100% !important;
+}
+.forms-link{
+  color:$color3;
+  
+  margin-right: 12%;
+}
+.forms-link:hover{
+  color:$color1;
+}
+.bs:hover{
+background-color: white;
+color:$color3;
+border: solid;
+}
+.titre-forms{
+  font-weight: bolder;
+  font-size: 30px;
+  text-align: center;
+  color:$color3
+}
+.image{
+border:solid;
+color:$color3;
+
+width:auto;
+}
+.rowInpt{
+  text-align: center!important;
+}
+.btn-secondaire{
+background-color: transparent;
+border: solid;
+color:$color3;
+border-radius: 10%;
+height: 45px;
+font-weight: bold;
+width:200px
+
+}
+.btn-principal{
+  background-color:$color3;
+ border-color: $color3;
+  color:white;
+  border-radius: 10%;
+  height: 45px;
+  font-weight: bold;
+  width:200px
+}
+.btn-forms{
+  color:white;
+background-color: $color3;
+text-align: center;
+font-weight: bold;
+border-radius: 10%;
+border-color: $color3;
+}
+.btn-file{
+color:white;
+background-color: $color3;
+text-align: center;
+font-weight: bold;
+border-top: solid;
+border-left: none !important;
+border-right: none !important;
+border-bottom: none !important;
+border-style: solid;
+}
+input[type="file"] {
+  display: none;
+}
+.forms-textarea{
+  height: 100px;
+}
+
+.forms-input{
+  color:$color3;
+  border-bottom: solid !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0px  !important;
+  box-shadow: none !important ;
+  padding-top: 20px !important;
+}
+
+ 
+ .forms-input:focus{
+  color:$color3;
+box-shadow: none !important ;
+background-color: transparent;
 }

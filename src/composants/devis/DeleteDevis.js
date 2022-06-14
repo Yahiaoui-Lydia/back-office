@@ -11,7 +11,7 @@ function DeleteDevis(props) {
     count++;
      
           if(props.rows.length === count){ 
-            window.location.href='/devis'
+            window.location.href='/devisNonValid'
         }
     }
     const deleteDevis = async (id) => {
